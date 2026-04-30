@@ -1,0 +1,13 @@
+{
+  "extends": "../tsconfig.base.json",
+  "compilerOptions": {
+    "noEmit": true,
+    "lib": ["ES2022"],
+    "types": ["node"],
+    "paths": {
+      "@office-chores/shared": ["../shared/src/index.ts"],
+      "@office-chores/shared/*": ["../shared/src/*"]
+    }
+  },
+  "include": ["src/**/*", "tests/**/*", "vitest.config.ts", "../shared/src/**/*"]
+}

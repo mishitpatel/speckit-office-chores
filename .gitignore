@@ -1,0 +1,38 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+build/
+*.tsbuildinfo
+
+# Coverage / test artifacts
+coverage/
+.nyc_output/
+playwright-report/
+test-results/
+
+# Local data
+server/data/*.sqlite
+server/data/*.sqlite-journal
+server/data/*.sqlite-shm
+server/data/*.sqlite-wal
+
+# Editor / OS
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+*.swp
+*.tmp
+
+# Env
+.env
+.env.local
+.env.*.local
+
+# Logs
+*.log
+
+# Vite
+.vite/

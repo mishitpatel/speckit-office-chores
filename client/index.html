@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Office Chores</title>
+    <script>
+      // FOUC-safe theme bootstrap. Runs before React mounts.
+      (function () {
+        try {
+          var stored = localStorage.getItem("theme");
+          var systemDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+          var resolved = stored === "light" || stored === "dark" ? stored : "dark";
+          if (!stored && !systemDark) resolved = "light";
+          if (resolved === "dark") document.documentElement.classList.add("dark");
+        } catch (_) {
+          document.documentElement.classList.add("dark");
+        }
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

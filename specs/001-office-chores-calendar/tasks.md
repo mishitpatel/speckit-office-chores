@@ -39,18 +39,18 @@ shared/   # Cross-package zod schemas + TS types
 
 **Purpose**: Workspace scaffolding, tooling, and CI plumbing.
 
-- [ ] T001 Initialize npm workspaces at repo root in `package.json` (workspaces: `client`, `server`, `shared`; add root scripts `check`, `test`, `build`)
-- [ ] T002 [P] Add repo `.gitignore` (entries: `node_modules`, `dist`, `coverage`, `server/data/*.sqlite*`, `.env.local`, `client/playwright-report`)
-- [ ] T003 [P] Create `tsconfig.base.json` at repo root with `"strict": true`, `"target": "ES2022"`, `"module": "NodeNext"`
-- [ ] T004 [P] Add `eslint.config.js` and `.prettierrc` at repo root (typescript-eslint flat config; consistent rules across workspaces)
-- [ ] T005 [P] Initialize shared package: `shared/package.json`, `shared/tsconfig.json`, empty `shared/src/index.ts`
-- [ ] T006 [P] Initialize server package: `server/package.json` (Express 4, better-sqlite3, zod, pino), `server/tsconfig.json`, `server/vitest.config.ts` (node env, v8 coverage)
-- [ ] T007 [P] Initialize client package: `client/package.json` (Vite 5, React 19, react-dom, TypeScript 5.6), `client/tsconfig.json`, `client/vite.config.ts`
-- [ ] T008 [P] Configure Tailwind v4 in `client/tailwind.config.ts` and add `@tailwindcss/vite` plugin to `client/vite.config.ts`
-- [ ] T009 [P] Initialize shadcn/ui: `client/components.json` with `style: "new-york"`, `baseColor: "neutral"`
-- [ ] T010 [P] Add `client/vitest.config.ts` (jsdom env, v8 coverage, setupFiles for testing-library)
-- [ ] T011 [P] Add `client/playwright.config.ts` for the demo smoke (Chromium only)
-- [ ] T012 [P] Add GitHub Actions workflow `.github/workflows/ci.yml` running `npm ci`, `npm run check`, `npm test`, `npm run build`
+- [X] T001 Initialize npm workspaces at repo root in `package.json` (workspaces: `client`, `server`, `shared`; add root scripts `check`, `test`, `build`)
+- [X] T002 [P] Add repo `.gitignore` (entries: `node_modules`, `dist`, `coverage`, `server/data/*.sqlite*`, `.env.local`, `client/playwright-report`)
+- [X] T003 [P] Create `tsconfig.base.json` at repo root with `"strict": true`, `"target": "ES2022"`, `"module": "NodeNext"`
+- [X] T004 [P] Add `eslint.config.js` and `.prettierrc` at repo root (typescript-eslint flat config; consistent rules across workspaces)
+- [X] T005 [P] Initialize shared package: `shared/package.json`, `shared/tsconfig.json`, empty `shared/src/index.ts`
+- [X] T006 [P] Initialize server package: `server/package.json` (Express 4, better-sqlite3, zod, pino), `server/tsconfig.json`, `server/vitest.config.ts` (node env, v8 coverage)
+- [X] T007 [P] Initialize client package: `client/package.json` (Vite 5, React 19, react-dom, TypeScript 5.6), `client/tsconfig.json`, `client/vite.config.ts`
+- [X] T008 [P] Configure Tailwind v4 in `client/tailwind.config.ts` and add `@tailwindcss/vite` plugin to `client/vite.config.ts`
+- [X] T009 [P] Initialize shadcn/ui: `client/components.json` with `style: "new-york"`, `baseColor: "neutral"`
+- [X] T010 [P] Add `client/vitest.config.ts` (jsdom env, v8 coverage, setupFiles for testing-library)
+- [X] T011 [P] Add `client/playwright.config.ts` for the demo smoke (Chromium only)
+- [X] T012 [P] Add GitHub Actions workflow `.github/workflows/ci.yml` running `npm ci`, `npm run check`, `npm test`, `npm run build`
 
 ---
 
@@ -63,41 +63,41 @@ implemented — shared schemas, DB plumbing, server app shell, client layout she
 
 ### Shared schemas
 
-- [ ] T013 [P] Define Person zod schemas (`PersonSchema`, `PersonCreateSchema`, `PersonUpdateSchema`) in `shared/src/person.ts`
-- [ ] T014 [P] Define Chore zod schemas (`ChoreSchema`, `ChoreCreateSchema`, `ChoreUpdateSchema`) in `shared/src/chore.ts`
-- [ ] T015 [P] Define error envelope and shared API helper types in `shared/src/api.ts`
-- [ ] T016 Re-export every schema/type from `shared/src/index.ts`
+- [X] T013 [P] Define Person zod schemas (`PersonSchema`, `PersonCreateSchema`, `PersonUpdateSchema`) in `shared/src/person.ts`
+- [X] T014 [P] Define Chore zod schemas (`ChoreSchema`, `ChoreCreateSchema`, `ChoreUpdateSchema`) in `shared/src/chore.ts`
+- [X] T015 [P] Define error envelope and shared API helper types in `shared/src/api.ts`
+- [X] T016 Re-export every schema/type from `shared/src/index.ts`
 
 ### Server infrastructure
 
-- [ ] T017 Author full schema and indexes (per data-model.md) in `server/src/db/schema.sql`
-- [ ] T018 Create better-sqlite3 connection helper (WAL mode, FK pragma) in `server/src/db/index.ts`
-- [ ] T019 Create idempotent migration runner that exec()s `schema.sql` in `server/src/db/migrate.ts`
-- [ ] T020 Create idempotent seed routine inserting 6 placeholder names when roster is empty in `server/src/lib/seed.ts`
-- [ ] T021 Create typed in-process event bus (EventEmitter; events: `chore.created` / `chore.updated` / `chore.deleted` / `person.created` / `person.updated` / `person.deleted`) in `server/src/events/bus.ts`
-- [ ] T022 Create Express app factory (json middleware, request logger via pino, central error handler returning `{code, message, details?}`, `GET /api/health`) in `server/src/app.ts`
-- [ ] T023 Create server entry point (boots app, runs migrate + seed, listens on `127.0.0.1:8787` per FR-022) in `server/src/index.ts`
-- [ ] T024 [P] Server unit test: migration runs idempotently in `server/tests/unit/migrate.test.ts`
-- [ ] T025 [P] Server unit test: seed inserts 6 rows on empty DB and is no-op when populated in `server/tests/unit/seed.test.ts`
-- [ ] T026 [P] Server integration test: `GET /api/health` returns 200 in `server/tests/integration/health.test.ts`
+- [X] T017 Author full schema and indexes (per data-model.md) in `server/src/db/schema.sql`
+- [X] T018 Create better-sqlite3 connection helper (WAL mode, FK pragma) in `server/src/db/index.ts`
+- [X] T019 Create idempotent migration runner that exec()s `schema.sql` in `server/src/db/migrate.ts`
+- [X] T020 Create idempotent seed routine inserting 6 placeholder names when roster is empty in `server/src/lib/seed.ts`
+- [X] T021 Create typed in-process event bus (EventEmitter; events: `chore.created` / `chore.updated` / `chore.deleted` / `person.created` / `person.updated` / `person.deleted`) in `server/src/events/bus.ts`
+- [X] T022 Create Express app factory (json middleware, request logger via pino, central error handler returning `{code, message, details?}`, `GET /api/health`) in `server/src/app.ts`
+- [X] T023 Create server entry point (boots app, runs migrate + seed, listens on `127.0.0.1:8787` per FR-022) in `server/src/index.ts`
+- [X] T024 [P] Server unit test: migration runs idempotently in `server/tests/unit/migrate.test.ts`
+- [X] T025 [P] Server unit test: seed inserts 6 rows on empty DB and is no-op when populated in `server/tests/unit/seed.test.ts`
+- [X] T026 [P] Server integration test: `GET /api/health` returns 200 in `server/tests/integration/health.test.ts`
 
 ### Client infrastructure
 
-- [ ] T027 [P] Author dark+light token layer (1px borders, no shadows, near-black `#0d0d0d`/`#171717`, off-white `#fafafa`, single muted accent) in `client/src/styles/theme.css`
-- [ ] T028 [P] Add base resets and Geist Sans font import via `geist/font/sans` in `client/src/styles/globals.css`
-- [ ] T029 [P] Add FOUC-safe inline theme bootstrap script in `client/index.html` (reads `localStorage["theme"]`, falls back to `prefers-color-scheme`, sets `class="dark"` on `<html>` before React mounts)
-- [ ] T030 [P] Implement `useTheme` hook (get/set/toggle, writes localStorage, listens to system change) in `client/src/hooks/useTheme.ts`
-- [ ] T031 [P] Implement typed fetch wrapper (parses error envelope from shared, surfaces typed responses via shared schemas) in `client/src/lib/api.ts`
-- [ ] T032 [P] Implement date helpers (`monthMatrix`, `formatYmd`, `isToday`, `addMonths` via date-fns) in `client/src/lib/dates.ts`
-- [ ] T033 [P] Add Zustand and create store skeletons (`client/src/store/people.ts`, `client/src/store/chores.ts`, `client/src/store/filter.ts`) with mutation handlers shaped to accept either REST responses or future server-pushed events
-- [ ] T034 [P] Add shadcn/ui base components (`button`, `input`, `label`, `dialog`, `select`, `popover`, `calendar`, `tooltip`, `dropdown-menu`, `separator`, `sonner`) into `client/src/components/ui/`
-- [ ] T035 Implement layout shell (header + collapsible sidebar + main calendar area) in `client/src/App.tsx`
-- [ ] T036 Implement header skeleton with theme toggle in `client/src/components/header/Header.tsx`
-- [ ] T037 Implement sidebar chrome with collapse persistence (localStorage; FR-005) in `client/src/components/sidebar/Sidebar.tsx`
-- [ ] T038 Wire `App` and global styles in `client/src/main.tsx`
-- [ ] T039 [P] Client unit test: `useTheme` defaults, persists, toggles in `client/tests/unit/useTheme.test.ts`
-- [ ] T040 [P] Client unit test: date helpers (month matrix shape, isToday) in `client/tests/unit/dates.test.ts`
-- [ ] T041 [P] Client unit test: theme bootstrap sets `dark` class synchronously in `client/tests/unit/themeBootstrap.test.ts`
+- [X] T027 [P] Author dark+light token layer (1px borders, no shadows, near-black `#0d0d0d`/`#171717`, off-white `#fafafa`, single muted accent) in `client/src/styles/theme.css`
+- [X] T028 [P] Add base resets and Geist Sans font import via `geist/font/sans` in `client/src/styles/globals.css`
+- [X] T029 [P] Add FOUC-safe inline theme bootstrap script in `client/index.html` (reads `localStorage["theme"]`, falls back to `prefers-color-scheme`, sets `class="dark"` on `<html>` before React mounts)
+- [X] T030 [P] Implement `useTheme` hook (get/set/toggle, writes localStorage, listens to system change) in `client/src/hooks/useTheme.ts`
+- [X] T031 [P] Implement typed fetch wrapper (parses error envelope from shared, surfaces typed responses via shared schemas) in `client/src/lib/api.ts`
+- [X] T032 [P] Implement date helpers (`monthMatrix`, `formatYmd`, `isToday`, `addMonths` via date-fns) in `client/src/lib/dates.ts`
+- [X] T033 [P] Add Zustand and create store skeletons (`client/src/store/people.ts`, `client/src/store/chores.ts`, `client/src/store/filter.ts`) with mutation handlers shaped to accept either REST responses or future server-pushed events
+- [X] T034 [P] Add shadcn/ui base components (`button`, `input`, `label`, `dialog`, `select`, `popover`, `calendar`, `tooltip`, `dropdown-menu`, `separator`, `sonner`) into `client/src/components/ui/`
+- [X] T035 Implement layout shell (header + collapsible sidebar + main calendar area) in `client/src/App.tsx`
+- [X] T036 Implement header skeleton with theme toggle in `client/src/components/header/Header.tsx`
+- [X] T037 Implement sidebar chrome with collapse persistence (localStorage; FR-005) in `client/src/components/sidebar/Sidebar.tsx`
+- [X] T038 Wire `App` and global styles in `client/src/main.tsx`
+- [X] T039 [P] Client unit test: `useTheme` defaults, persists, toggles in `client/tests/unit/useTheme.test.ts`
+- [X] T040 [P] Client unit test: date helpers (month matrix shape, isToday) in `client/tests/unit/dates.test.ts`
+- [X] T041 [P] Client unit test: theme bootstrap sets `dark` class synchronously in `client/tests/unit/themeBootstrap.test.ts`
 
 **Checkpoint**: Foundation ready — user story implementation can now begin.
 

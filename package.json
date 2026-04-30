@@ -1,0 +1,27 @@
+{
+  "name": "office-chores",
+  "private": true,
+  "version": "0.0.1",
+  "description": "Office Chores POC — calendar of chores assigned to people in the office.",
+  "workspaces": [
+    "shared",
+    "server",
+    "client"
+  ],
+  "scripts": {
+    "check": "npm run check --workspaces --if-present",
+    "test": "npm run test --workspaces --if-present",
+    "build": "npm run build --workspaces --if-present",
+    "lint": "eslint .",
+    "format": "prettier --write ."
+  },
+  "devDependencies": {
+    "typescript": "^5.6.3",
+    "eslint": "^9.14.0",
+    "typescript-eslint": "^8.13.0",
+    "prettier": "^3.3.3"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}
