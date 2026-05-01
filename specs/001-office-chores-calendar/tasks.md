@@ -137,7 +137,7 @@ chore on today's cell rendering its title and assignee.
 - [X] T059 [P] [US1] Client unit test: `MonthGrid` renders 42 cells for any month start in `client/tests/unit/MonthGrid.test.tsx`
 - [X] T060 [P] [US1] Client unit test: `DayCell` shows today indicator, lists chores, renders "+N more" at >25 in `client/tests/unit/DayCell.test.tsx`
 - [X] T061 [P] [US1] Client unit test: `ChoreChip` honors `done` styling in `client/tests/unit/ChoreChip.test.tsx`
-- [ ] T062 [P] [US1] Client a11y assertion (axe-core) for the home view in `client/tests/unit/a11y.home.test.tsx`
+- [X] T062 [P] [US1] Client a11y assertion (axe-core) for the home view in `client/tests/unit/a11y.home.test.tsx`
 
 **Checkpoint**: US1 functional. App opens, shows the current month with chores, navigates
 between months. This is the MVP.
@@ -218,9 +218,9 @@ from A; reload — still on B. Pick up via keyboard, navigate, drop — same res
 - [X] T089 [US4] Make `ChoreChip` draggable via `useDraggable` (with appropriate `aria-grabbed`) in `client/src/components/calendar/ChoreChip.tsx`
 - [X] T090 [US4] Make `DayCell` a drop target via `useDroppable` (aria-label includes the cell's date) in `client/src/components/calendar/DayCell.tsx`
 - [X] T091 [US4] Wire `onDragEnd` to apply optimistic store update + dispatch PATCH; revert on error (toast) in `client/src/App.tsx`
-- [ ] T092 [P] [US4] Client unit test: drag from date A to date B updates store and dispatches PATCH `{date: B}`; drop on same cell does nothing in `client/tests/unit/dragReschedule.test.tsx`
-- [ ] T093 [P] [US4] Client unit test: drop outside any droppable cancels the drag (no PATCH) in `client/tests/unit/dragReschedule.cancel.test.tsx`
-- [ ] T094 [P] [US4] Client unit test: keyboard reschedule path (pick up → arrow keys → enter to drop) succeeds in `client/tests/unit/dragReschedule.keyboard.test.tsx`
+- [X] T092 [P] [US4] Client unit test: drag from date A to date B updates store and dispatches PATCH `{date: B}`; drop on same cell does nothing in `client/tests/unit/dragReschedule.test.tsx`
+- [X] T093 [P] [US4] Client unit test: drop outside any droppable cancels the drag (no PATCH) in `client/tests/unit/dragReschedule.cancel.test.tsx`
+- [X] T094 [P] [US4] Client unit test: keyboard reschedule path (pick up → arrow keys → enter to drop) succeeds in `client/tests/unit/dragReschedule.keyboard.test.tsx`
 
 **Checkpoint**: Full chore lifecycle (US1+US2+US3+US4) — view, create, edit, done, delete, drag.
 
@@ -282,13 +282,13 @@ Alex's chores remain; click *All* — every chore returns; reload — filter per
 
 **Purpose**: Final accessibility, performance, and end-to-end validations.
 
-- [ ] T114 [P] Client a11y assertion (axe-core) for `ChoreForm` in create + edit modes in `client/tests/unit/a11y.choreform.test.tsx`
-- [ ] T115 [P] Playwright E2E demo path (open → create → reschedule → done → delete → filter) in `client/tests/e2e/demo.spec.ts`
-- [ ] T116 [P] Server perf assertion: `GET /api/chores?from&to` p95 < 300 ms across N=1000 calls on in-memory SQLite in `server/tests/integration/perf.test.ts`
-- [ ] T117 [P] Server perf assertion: mutating endpoints p95 < 500 ms in `server/tests/integration/perf.mutate.test.ts`
-- [ ] T118 [P] Document the bundle-size budget (≤250 KB gzipped main chunk) and how to inspect Vite's report in `client/README.md`
+- [X] T114 [P] Client a11y assertion (axe-core) for `ChoreForm` in create + edit modes in `client/tests/unit/a11y.choreform.test.tsx`
+- [X] T115 [P] Playwright E2E demo path (open → create → reschedule → done → delete → filter) in `client/tests/e2e/demo.spec.ts`
+- [X] T116 [P] Server perf assertion: `GET /api/chores?from&to` p95 < 300 ms across N=1000 calls on in-memory SQLite in `server/tests/integration/perf.test.ts`
+- [X] T117 [P] Server perf assertion: mutating endpoints p95 < 500 ms in `server/tests/integration/perf.mutate.test.ts`
+- [X] T118 [P] Document the bundle-size budget (≤250 KB gzipped main chunk) and how to inspect Vite's report in `client/README.md`
 - [X] T119 [P] Add repo `README.md` pointing at `specs/001-office-chores-calendar/quickstart.md` and listing top-level scripts
-- [ ] T120 Run quickstart validation manually: `npm install` → start client and server → execute the demo path in a real browser; capture any deltas back into `quickstart.md`
+- [X] T120 Run quickstart validation manually: `npm install` → start client and server → execute the demo path in a real browser; capture any deltas back into `quickstart.md`
 
 ---
 

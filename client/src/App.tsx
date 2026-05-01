@@ -20,6 +20,7 @@ import { useChoresStore } from "@/store/chores";
 import { useFilterStore } from "@/store/filter";
 import { useTheme } from "@/hooks/useTheme";
 import { formatYmd } from "@/lib/dates";
+import { applyDragEnd } from "@/lib/dragEnd";
 
 export function App() {
   const { theme } = useTheme();
@@ -61,14 +62,10 @@ export function App() {
   const chores = useMemo(() => Object.values(choresMap), [choresMap]);
 
   function handleDragEnd(event: DragEndEvent) {
-    const { active, over } = event;
-    if (!over) return;
-    const targetDate = (over.data.current as { date?: string } | undefined)?.date;
-    if (!targetDate) return;
-    const choreId = String(active.id);
-    const current = choresMap[choreId];
-    if (!current || current.date === targetDate) return;
-    void updateChore(choreId, { date: targetDate });
+    applyDragEnd(event, {
+      choresById: choresMap,
+      reschedule: (id, date) => void updateChore(id, { date }),
+    });
   }
 
   function openCreateForm(d: Date) {
