@@ -1,6 +1,6 @@
 # REST API Contract — Office Chores Calendar (Phase 1)
 
-**Base URL**: `http://127.0.0.1:8787` (server binds to localhost only — FR-022).
+**Base URL**: `http://127.0.0.1:8989` (server binds to localhost only — FR-022).
 **Content type**: `application/json; charset=utf-8` for all bodies.
 **Auth**: none (Phase 1; FR-022 plus Assumptions).
 **Error envelope** (any non-2xx): `{ "code": string, "message": string,

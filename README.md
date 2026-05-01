@@ -10,8 +10,8 @@ an in-process bus that a `/ws` handler can subscribe to).
 
 ```bash
 npm install                       # installs every workspace
-npm --workspace server run dev    # http://127.0.0.1:8787 — REST API
-npm --workspace client run dev    # http://localhost:5173  — Vite dev server
+npm --workspace server run dev    # http://127.0.0.1:8989 — REST API
+npm --workspace client run dev    # http://localhost:5273  — Vite dev server
 ```
 
 On first launch the server creates `server/data/data.sqlite` and seeds 6

@@ -27,10 +27,12 @@ export function App() {
   const [month, setMonth] = useState(() => new Date());
   const [formInitial, setFormInitial] = useState<ChoreFormInitial | null>(null);
 
-  const people = usePeopleStore((s) =>
-    s.ids.flatMap((id) => (s.byId[id] ? [s.byId[id]!] : [])),
-  );
+  const peopleIds = usePeopleStore((s) => s.ids);
   const peopleById = usePeopleStore((s) => s.byId);
+  const people = useMemo(
+    () => peopleIds.flatMap((id) => (peopleById[id] ? [peopleById[id]!] : [])),
+    [peopleIds, peopleById],
+  );
   const loadAllPeople = usePeopleStore((s) => s.loadAll);
   const createPerson = usePeopleStore((s) => s.createPerson);
   const renamePerson = usePeopleStore((s) => s.renamePerson);

@@ -76,7 +76,7 @@ implemented — shared schemas, DB plumbing, server app shell, client layout she
 - [X] T020 Create idempotent seed routine inserting 6 placeholder names when roster is empty in `server/src/lib/seed.ts`
 - [X] T021 Create typed in-process event bus (EventEmitter; events: `chore.created` / `chore.updated` / `chore.deleted` / `person.created` / `person.updated` / `person.deleted`) in `server/src/events/bus.ts`
 - [X] T022 Create Express app factory (json middleware, request logger via pino, central error handler returning `{code, message, details?}`, `GET /api/health`) in `server/src/app.ts`
-- [X] T023 Create server entry point (boots app, runs migrate + seed, listens on `127.0.0.1:8787` per FR-022) in `server/src/index.ts`
+- [X] T023 Create server entry point (boots app, runs migrate + seed, listens on `127.0.0.1:8989` per FR-022) in `server/src/index.ts`
 - [X] T024 [P] Server unit test: migration runs idempotently in `server/tests/unit/migrate.test.ts`
 - [X] T025 [P] Server unit test: seed inserts 6 rows on empty DB and is no-op when populated in `server/tests/unit/seed.test.ts`
 - [X] T026 [P] Server integration test: `GET /api/health` returns 200 in `server/tests/integration/health.test.ts`
@@ -109,7 +109,7 @@ implemented — shared schemas, DB plumbing, server app shell, client layout she
 assigned date and the assignee visible. Navigate between months without a reload.
 
 **Independent Test**: Seed at least one chore on today's date in the SQLite file,
-start client + server, open `http://localhost:5173` — current month is shown with the
+start client + server, open `http://localhost:5273` — current month is shown with the
 chore on today's cell rendering its title and assignee.
 
 ### Server (read paths)

@@ -23,15 +23,15 @@ Two processes, two terminals — kept separate from day one (FR-021).
 
 ```bash
 # terminal 1
-npm --workspace server run dev   # http://127.0.0.1:8787 — REST API
+npm --workspace server run dev   # http://127.0.0.1:8989 — REST API
 ```
 
 ```bash
 # terminal 2
-npm --workspace client run dev   # http://localhost:5173  — Vite dev server
+npm --workspace client run dev   # http://localhost:5273  — Vite dev server
 ```
 
-Open <http://localhost:5173>. On first launch the server seeds 6 placeholder
+Open <http://localhost:5273>. On first launch the server seeds 6 placeholder
 people. The current month is shown with an empty grid.
 
 ## Smoke test (the demo path)

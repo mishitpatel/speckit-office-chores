@@ -5,7 +5,7 @@ import { seedRoster } from "./lib/seed.js";
 import { PeopleRepo } from "./repos/people.js";
 import { ChoresRepo } from "./repos/chores.js";
 
-const PORT = Number(process.env.PORT ?? 8787);
+const PORT = Number(process.env.PORT ?? 8989);
 const HOST = "127.0.0.1";
 const DB_PATH = process.env.DB_PATH ?? "data/data.sqlite";
 

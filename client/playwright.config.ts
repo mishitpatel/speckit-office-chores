@@ -7,20 +7,20 @@ export default defineConfig({
   retries: process.env.CI ? 2 : 0,
   reporter: "list",
   use: {
-    baseURL: "http://localhost:5173",
+    baseURL: "http://localhost:5273",
     trace: "retain-on-failure",
   },
   projects: [{ name: "chromium", use: { ...devices["Desktop Chrome"] } }],
   webServer: [
     {
       command: "npm --workspace server run dev",
-      url: "http://127.0.0.1:8787/api/health",
+      url: "http://127.0.0.1:8989/api/health",
       reuseExistingServer: !process.env.CI,
       cwd: "..",
     },
     {
       command: "npm run dev",
-      url: "http://localhost:5173",
+      url: "http://localhost:5273",
       reuseExistingServer: !process.env.CI,
     },
   ],
