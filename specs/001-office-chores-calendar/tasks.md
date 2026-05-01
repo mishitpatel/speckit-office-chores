@@ -182,25 +182,25 @@ becomes muted/struck.
 
 ### Server
 
-- [ ] T072 [P] [US3] Add `getById(id)` to `server/src/repos/chores.ts`
-- [ ] T073 [P] [US3] Add `update(id, partial)` (emits `chore.updated`; not-found → `ChoreNotFoundError`; FK miss → `AssigneeNotFoundError`) to `server/src/repos/chores.ts`
-- [ ] T074 [P] [US3] Add `delete(id)` (emits `chore.deleted`; not-found → `ChoreNotFoundError`) to `server/src/repos/chores.ts`
-- [ ] T075 [US3] Server routes: `GET /api/chores/:id`, `PATCH /api/chores/:id` (parses `ChoreUpdateSchema`; rejects empty body 400), `DELETE /api/chores/:id` in `server/src/routes/chores.ts`
-- [ ] T076 [P] [US3] Server unit test: chores repo `update`/`delete` mutate row and emit the correct bus event in `server/tests/unit/chores.repo.mutate.test.ts`
-- [ ] T077 [P] [US3] Server integration test: `PATCH /api/chores/:id` 200 partial / 400 empty body / 404 not-found / 422 bad assignee in `server/tests/integration/chores.patch.test.ts`
-- [ ] T078 [P] [US3] Server integration test: `DELETE /api/chores/:id` 204 success / 404 not-found in `server/tests/integration/chores.delete.test.ts`
-- [ ] T079 [P] [US3] Server integration test: `GET /api/chores/:id` 200 / 404 in `server/tests/integration/chores.get.test.ts`
+- [X] T072 [P] [US3] Add `getById(id)` to `server/src/repos/chores.ts`
+- [X] T073 [P] [US3] Add `update(id, partial)` (emits `chore.updated`; not-found → `ChoreNotFoundError`; FK miss → `AssigneeNotFoundError`) to `server/src/repos/chores.ts`
+- [X] T074 [P] [US3] Add `delete(id)` (emits `chore.deleted`; not-found → `ChoreNotFoundError`) to `server/src/repos/chores.ts`
+- [X] T075 [US3] Server routes: `GET /api/chores/:id`, `PATCH /api/chores/:id` (parses `ChoreUpdateSchema`; rejects empty body 400), `DELETE /api/chores/:id` in `server/src/routes/chores.ts`
+- [X] T076 [P] [US3] Server unit test: chores repo `update`/`delete` mutate row and emit the correct bus event in `server/tests/unit/chores.repo.mutate.test.ts`
+- [X] T077 [P] [US3] Server integration test: `PATCH /api/chores/:id` 200 partial / 400 empty body / 404 not-found / 422 bad assignee in `server/tests/integration/chores.patch.test.ts`
+- [X] T078 [P] [US3] Server integration test: `DELETE /api/chores/:id` 204 success / 404 not-found in `server/tests/integration/chores.delete.test.ts`
+- [X] T079 [P] [US3] Server integration test: `GET /api/chores/:id` 200 / 404 in `server/tests/integration/chores.get.test.ts`
 
 ### Client
 
-- [ ] T080 [US3] Add optimistic `updateChore(id, patch)` and `deleteChore(id)` actions with rollback + Sonner error toast (FR-020) to `client/src/store/chores.ts`
-- [ ] T081 [US3] Extend `ChoreForm` with edit + delete modes (loads current values; Save → PATCH; Delete → confirm dialog → DELETE) in `client/src/components/chore-form/ChoreForm.tsx`
-- [ ] T082 [US3] Make `ChoreChip` body click open the edit form, and add a separate done-toggle affordance (checkbox icon, click-stops-propagation; PATCH `{done}`) in `client/src/components/calendar/ChoreChip.tsx`
-- [ ] T083 [US3] Update `DayCell` to render done chores in muted/struck style (FR-009b) in `client/src/components/calendar/DayCell.tsx`
-- [ ] T084 [P] [US3] Client unit test: `ChoreForm` edit mode pre-fills and PATCHes only changed fields in `client/tests/unit/ChoreForm.edit.test.tsx`
-- [ ] T085 [P] [US3] Client unit test: delete confirmation blocks accidental deletion (cancel keeps chore) in `client/tests/unit/ChoreForm.delete.test.tsx`
-- [ ] T086 [P] [US3] Client unit test: done toggle dispatches PATCH and updates UI immediately in `client/tests/unit/ChoreChip.done.test.tsx`
-- [ ] T087 [P] [US3] Client unit test: failing PATCH/DELETE reverts optimistic state and surfaces toast in `client/tests/unit/error.revert.test.tsx`
+- [X] T080 [US3] Add optimistic `updateChore(id, patch)` and `deleteChore(id)` actions with rollback + Sonner error toast (FR-020) to `client/src/store/chores.ts`
+- [X] T081 [US3] Extend `ChoreForm` with edit + delete modes (loads current values; Save → PATCH; Delete → confirm dialog → DELETE) in `client/src/components/chore-form/ChoreForm.tsx`
+- [X] T082 [US3] Make `ChoreChip` body click open the edit form, and add a separate done-toggle affordance (checkbox icon, click-stops-propagation; PATCH `{done}`) in `client/src/components/calendar/ChoreChip.tsx`
+- [X] T083 [US3] Update `DayCell` to render done chores in muted/struck style (FR-009b) in `client/src/components/calendar/DayCell.tsx`
+- [X] T084 [P] [US3] Client unit test: `ChoreForm` edit mode pre-fills and PATCHes only changed fields in `client/tests/unit/ChoreForm.edit.test.tsx`
+- [X] T085 [P] [US3] Client unit test: delete confirmation blocks accidental deletion (cancel keeps chore) in `client/tests/unit/ChoreForm.delete.test.tsx`
+- [X] T086 [P] [US3] Client unit test: done toggle dispatches PATCH and updates UI immediately in `client/tests/unit/ChoreChip.done.test.tsx`
+- [X] T087 [P] [US3] Client unit test: failing PATCH/DELETE reverts optimistic state and surfaces toast in `client/tests/unit/error.revert.test.tsx`
 
 **Checkpoint**: Full chore CRUD via the calendar, including done state.
 
@@ -214,10 +214,10 @@ works (FR-018, SC-008). No new server endpoints — uses `PATCH /api/chores/:id`
 **Independent Test**: Drag a chore from date A to date B → it appears on B and is gone
 from A; reload — still on B. Pick up via keyboard, navigate, drop — same result.
 
-- [ ] T088 [US4] Install `@dnd-kit/core` and configure `DndContext` with `PointerSensor` + `KeyboardSensor` in `client/src/App.tsx`
-- [ ] T089 [US4] Make `ChoreChip` draggable via `useDraggable` (with appropriate `aria-grabbed`) in `client/src/components/calendar/ChoreChip.tsx`
-- [ ] T090 [US4] Make `DayCell` a drop target via `useDroppable` (aria-label includes the cell's date) in `client/src/components/calendar/DayCell.tsx`
-- [ ] T091 [US4] Wire `onDragEnd` to apply optimistic store update + dispatch PATCH; revert on error (toast) in `client/src/App.tsx`
+- [X] T088 [US4] Install `@dnd-kit/core` and configure `DndContext` with `PointerSensor` + `KeyboardSensor` in `client/src/App.tsx`
+- [X] T089 [US4] Make `ChoreChip` draggable via `useDraggable` (with appropriate `aria-grabbed`) in `client/src/components/calendar/ChoreChip.tsx`
+- [X] T090 [US4] Make `DayCell` a drop target via `useDroppable` (aria-label includes the cell's date) in `client/src/components/calendar/DayCell.tsx`
+- [X] T091 [US4] Wire `onDragEnd` to apply optimistic store update + dispatch PATCH; revert on error (toast) in `client/src/App.tsx`
 - [ ] T092 [P] [US4] Client unit test: drag from date A to date B updates store and dispatches PATCH `{date: B}`; drop on same cell does nothing in `client/tests/unit/dragReschedule.test.tsx`
 - [ ] T093 [P] [US4] Client unit test: drop outside any droppable cancels the drag (no PATCH) in `client/tests/unit/dragReschedule.cancel.test.tsx`
 - [ ] T094 [P] [US4] Client unit test: keyboard reschedule path (pick up → arrow keys → enter to drop) succeeds in `client/tests/unit/dragReschedule.keyboard.test.tsx`

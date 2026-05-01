@@ -11,9 +11,17 @@ interface Props {
   peopleById: Record<string, Person>;
   onClickDay: (date: Date) => void;
   onClickChore: (chore: Chore) => void;
+  onToggleDone: (chore: Chore) => void;
 }
 
-export function MonthGrid({ month, chores, peopleById, onClickDay, onClickChore }: Props) {
+export function MonthGrid({
+  month,
+  chores,
+  peopleById,
+  onClickDay,
+  onClickChore,
+  onToggleDone,
+}: Props) {
   const days = useMemo(() => monthMatrix(month), [month]);
   const choresByDate = useMemo(() => {
     const map: Record<string, Chore[]> = {};
@@ -44,6 +52,7 @@ export function MonthGrid({ month, chores, peopleById, onClickDay, onClickChore 
               peopleById={peopleById}
               onClickDay={onClickDay}
               onClickChore={onClickChore}
+              onToggleDone={onToggleDone}
             />
           );
         })}

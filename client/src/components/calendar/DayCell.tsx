@@ -1,3 +1,4 @@
+import { useDroppable } from "@dnd-kit/core";
 import type { Chore, Person } from "@office-chores/shared";
 import { ChoreChip } from "./ChoreChip";
 import { cn } from "@/lib/cn";
@@ -12,20 +13,32 @@ interface Props {
   peopleById: Record<string, Person>;
   onClickDay: (date: Date) => void;
   onClickChore: (chore: Chore) => void;
+  onToggleDone: (chore: Chore) => void;
 }
 
-export function DayCell({ date, inMonth, chores, peopleById, onClickDay, onClickChore }: Props) {
+export function DayCell({
+  date,
+  inMonth,
+  chores,
+  peopleById,
+  onClickDay,
+  onClickChore,
+  onToggleDone,
+}: Props) {
   const today = isTodayHelper(date);
   const visible = chores.slice(0, MAX_VISIBLE);
   const overflow = chores.length - visible.length;
   const ymd = formatYmd(date);
+  const { setNodeRef, isOver } = useDroppable({ id: `day:${ymd}`, data: { date: ymd } });
 
   return (
     <div
+      ref={setNodeRef}
       role="gridcell"
       aria-label={`Day ${ymd}${today ? " (today)" : ""}`}
       data-date={ymd}
       data-in-month={inMonth ? "true" : "false"}
+      data-drop-over={isOver ? "true" : "false"}
       onClick={(e) => {
         if (e.target === e.currentTarget || (e.target as HTMLElement).dataset.daySurface === "true") {
           onClickDay(date);
@@ -36,6 +49,7 @@ export function DayCell({ date, inMonth, chores, peopleById, onClickDay, onClick
         "bg-[var(--color-bg-elev)]",
         !inMonth && "bg-[var(--color-bg)] text-[var(--color-fg-muted)]",
         today && "ring-1 ring-[var(--color-accent)] ring-inset",
+        isOver && "bg-[var(--color-bg)] ring-1 ring-[var(--color-accent)]",
       )}
     >
       <div data-day-surface="true" className="flex items-center justify-between text-xs">
@@ -50,6 +64,7 @@ export function DayCell({ date, inMonth, chores, peopleById, onClickDay, onClick
             chore={c}
             assignee={peopleById[c.assigneeId]}
             onClick={onClickChore}
+            onToggleDone={onToggleDone}
           />
         ))}
         {overflow > 0 && (

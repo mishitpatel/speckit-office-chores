@@ -1,10 +1,12 @@
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import { createPortal } from "react-dom";
-import type { Person } from "@office-chores/shared";
+import type { Chore, Person } from "@office-chores/shared";
 import { ChoreCreateSchema } from "@office-chores/shared";
 import { cn } from "@/lib/cn";
 
 export interface ChoreFormInitial {
+  /** Existing chore id when editing; undefined when creating. */
+  id?: string;
   title?: string;
   assigneeId?: string;
   date: string;
@@ -14,6 +16,7 @@ interface Props {
   initial: ChoreFormInitial;
   people: Person[];
   onSubmit: (values: { title: string; assigneeId: string; date: string }) => Promise<void>;
+  onDelete?: (id: string) => Promise<void>;
   onClose: () => void;
 }
 
@@ -24,7 +27,8 @@ interface FieldErrors {
   form?: string;
 }
 
-export function ChoreForm({ initial, people, onSubmit, onClose }: Props) {
+export function ChoreForm({ initial, people, onSubmit, onDelete, onClose }: Props) {
+  const isEdit = Boolean(initial.id);
   const [title, setTitle] = useState(initial.title ?? "");
   const [assigneeId, setAssigneeId] = useState(
     initial.assigneeId ?? (people[0]?.id ?? ""),
@@ -32,6 +36,7 @@ export function ChoreForm({ initial, people, onSubmit, onClose }: Props) {
   const [date, setDate] = useState(initial.date);
   const [errors, setErrors] = useState<FieldErrors>({});
   const [submitting, setSubmitting] = useState(false);
+  const [confirmDelete, setConfirmDelete] = useState(false);
   const titleInputRef = useRef<HTMLInputElement>(null);
 
   useEffect(() => {
@@ -74,6 +79,18 @@ export function ChoreForm({ initial, people, onSubmit, onClose }: Props) {
     }
   }
 
+  async function handleDelete() {
+    if (!initial.id || !onDelete) return;
+    setSubmitting(true);
+    try {
+      await onDelete(initial.id);
+      onClose();
+    } catch (err) {
+      setErrors({ form: (err as Error).message });
+      setSubmitting(false);
+    }
+  }
+
   const dialog = (
     <div
       className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4"
@@ -87,7 +104,7 @@ export function ChoreForm({ initial, people, onSubmit, onClose }: Props) {
         onClick={(e) => e.stopPropagation()}
       >
         <h2 id="chore-form-title" className="mb-4 text-sm font-medium tracking-tight">
-          New chore
+          {isEdit ? "Edit chore" : "New chore"}
         </h2>
         <form onSubmit={handleSubmit} noValidate className="flex flex-col gap-3">
           <Field label="Title" error={errors.title} htmlFor="chore-title">
@@ -97,7 +114,6 @@ export function ChoreForm({ initial, people, onSubmit, onClose }: Props) {
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               maxLength={120}
-              required
               className={fieldClass}
               data-testid="chore-form-title"
             />
@@ -107,7 +123,6 @@ export function ChoreForm({ initial, people, onSubmit, onClose }: Props) {
               id="chore-assignee"
               value={assigneeId}
               onChange={(e) => setAssigneeId(e.target.value)}
-              required
               className={fieldClass}
               data-testid="chore-form-assignee"
             >
@@ -127,7 +142,6 @@ export function ChoreForm({ initial, people, onSubmit, onClose }: Props) {
               type="date"
               value={date}
               onChange={(e) => setDate(e.target.value)}
-              required
               className={fieldClass}
               data-testid="chore-form-date"
             />
@@ -137,22 +151,58 @@ export function ChoreForm({ initial, people, onSubmit, onClose }: Props) {
               {errors.form}
             </p>
           )}
-          <div className="mt-2 flex justify-end gap-2">
-            <button
-              type="button"
-              onClick={onClose}
-              className="h-8 rounded-sm border px-3 text-xs hover:bg-[var(--color-bg)]"
-            >
-              Cancel
-            </button>
-            <button
-              type="submit"
-              disabled={submitting}
-              data-testid="chore-form-submit"
-              className="h-8 rounded-sm border bg-[var(--color-fg)] px-3 text-xs text-[var(--color-bg)] disabled:opacity-50"
-            >
-              {submitting ? "Saving…" : "Save"}
-            </button>
+          <div className="mt-2 flex items-center justify-between gap-2">
+            <div>
+              {isEdit && onDelete && !confirmDelete && (
+                <button
+                  type="button"
+                  onClick={() => setConfirmDelete(true)}
+                  data-testid="chore-form-delete"
+                  className="h-8 rounded-sm border px-3 text-xs text-red-500 hover:bg-[var(--color-bg)]"
+                >
+                  Delete
+                </button>
+              )}
+              {confirmDelete && (
+                <div className="flex items-center gap-2 text-xs">
+                  <span className="text-[var(--color-fg-muted)]">Are you sure?</span>
+                  <button
+                    type="button"
+                    onClick={() => setConfirmDelete(false)}
+                    data-testid="chore-form-delete-cancel"
+                    className="h-8 rounded-sm border px-2 hover:bg-[var(--color-bg)]"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="button"
+                    onClick={handleDelete}
+                    data-testid="chore-form-delete-confirm"
+                    disabled={submitting}
+                    className="h-8 rounded-sm border bg-red-600 px-2 text-white disabled:opacity-50"
+                  >
+                    Delete
+                  </button>
+                </div>
+              )}
+            </div>
+            <div className="flex gap-2">
+              <button
+                type="button"
+                onClick={onClose}
+                className="h-8 rounded-sm border px-3 text-xs hover:bg-[var(--color-bg)]"
+              >
+                Cancel
+              </button>
+              <button
+                type="submit"
+                disabled={submitting}
+                data-testid="chore-form-submit"
+                className="h-8 rounded-sm border bg-[var(--color-fg)] px-3 text-xs text-[var(--color-bg)] disabled:opacity-50"
+              >
+                {submitting ? "Saving…" : "Save"}
+              </button>
+            </div>
           </div>
         </form>
       </div>
