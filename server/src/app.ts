@@ -3,23 +3,30 @@ import { pinoHttp } from "pino-http";
 import { ZodError } from "zod";
 import { ERROR_CODES } from "@office-chores/shared";
 import { ApiHttpError } from "./lib/errors.js";
+import type { PeopleRepo } from "./repos/people.js";
+import type { ChoresRepo } from "./repos/chores.js";
+import { createPeopleRouter } from "./routes/people.js";
+import { createChoresRouter } from "./routes/chores.js";
 
 export interface AppDeps {
-  /** Optional logger toggle for tests. */
+  people: PeopleRepo;
+  chores: ChoresRepo;
+  /** Suppresses request logging — useful in tests. */
   silent?: boolean;
 }
 
-export function createApp(_deps: AppDeps = {}): Application {
+export function createApp(deps: AppDeps): Application {
   const app = express();
   app.disable("x-powered-by");
   app.use(express.json({ limit: "64kb" }));
-  if (!_deps.silent) app.use(pinoHttp({ transport: { target: "pino-pretty" } }));
+  if (!deps.silent) app.use(pinoHttp({ transport: { target: "pino-pretty" } }));
 
   app.get("/api/health", (_req: Request, res: Response) => {
     res.json({ status: "ok" });
   });
 
-  // Routers are wired in by user-story phases (US1+).
+  app.use("/api/people", createPeopleRouter(deps.people));
+  app.use("/api/chores", createChoresRouter(deps.chores));
 
   app.use((_req: Request, res: Response) => {
     res.status(404).json({ code: "not_found", message: "route not found" });

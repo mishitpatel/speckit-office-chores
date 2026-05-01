@@ -114,29 +114,29 @@ chore on today's cell rendering its title and assignee.
 
 ### Server (read paths)
 
-- [ ] T042 [P] [US1] Add `list()` method (alphabetical by `LOWER(name)`) to `server/src/repos/people.ts`
-- [ ] T043 [P] [US1] Add `listByDateRange({from, to, assigneeId?})` method using `chore_date_assignee` index to `server/src/repos/chores.ts`
-- [ ] T044 [P] [US1] Server route: `GET /api/people` in `server/src/routes/people.ts`
-- [ ] T045 [P] [US1] Server route: `GET /api/chores?from&to[&assigneeId]` (validates date format, range ≤92 days, ordering by `(date, created_at)`) in `server/src/routes/chores.ts`
-- [ ] T046 [US1] Wire the new routes into `server/src/app.ts`
-- [ ] T047 [P] [US1] Server unit test: people repo `list()` returns case-insensitive alphabetical order in `server/tests/unit/people.repo.list.test.ts`
-- [ ] T048 [P] [US1] Server unit test: chores repo `listByDateRange()` respects date range and `assigneeId` filter in `server/tests/unit/chores.repo.list.test.ts`
-- [ ] T049 [P] [US1] Server integration test: `GET /api/people` 200 + body matches `Person[]` in `server/tests/integration/people.list.test.ts`
-- [ ] T050 [P] [US1] Server integration test: `GET /api/chores?from&to` 200 happy path; 400 on inverted range; 400 on >92-day range in `server/tests/integration/chores.list.test.ts`
+- [X] T042 [P] [US1] Add `list()` method (alphabetical by `LOWER(name)`) to `server/src/repos/people.ts`
+- [X] T043 [P] [US1] Add `listByDateRange({from, to, assigneeId?})` method using `chore_date_assignee` index to `server/src/repos/chores.ts`
+- [X] T044 [P] [US1] Server route: `GET /api/people` in `server/src/routes/people.ts`
+- [X] T045 [P] [US1] Server route: `GET /api/chores?from&to[&assigneeId]` (validates date format, range ≤92 days, ordering by `(date, created_at)`) in `server/src/routes/chores.ts`
+- [X] T046 [US1] Wire the new routes into `server/src/app.ts`
+- [X] T047 [P] [US1] Server unit test: people repo `list()` returns case-insensitive alphabetical order in `server/tests/unit/people.repo.list.test.ts`
+- [X] T048 [P] [US1] Server unit test: chores repo `listByDateRange()` respects date range and `assigneeId` filter in `server/tests/unit/chores.repo.list.test.ts`
+- [X] T049 [P] [US1] Server integration test: `GET /api/people` 200 + body matches `Person[]` in `server/tests/integration/people.list.test.ts`
+- [X] T050 [P] [US1] Server integration test: `GET /api/chores?from&to` 200 happy path; 400 on inverted range; 400 on >92-day range in `server/tests/integration/chores.list.test.ts`
 
 ### Client (calendar + sidebar render)
 
-- [ ] T051 [US1] Implement `loadAll()` action backed by `GET /api/people` in `client/src/store/people.ts`
-- [ ] T052 [US1] Implement `loadMonth(monthDate)` action backed by `GET /api/chores?from&to` (with current-filter `assigneeId` if set) in `client/src/store/chores.ts`
-- [ ] T053 [P] [US1] Implement `MonthGrid` component (Tailwind grid, 6×7 cells, weekday header) in `client/src/components/calendar/MonthGrid.tsx`
-- [ ] T054 [P] [US1] Implement `DayCell` component (date number, today indicator, chore list, "+N more" overflow at >25) in `client/src/components/calendar/DayCell.tsx`
-- [ ] T055 [P] [US1] Implement `ChoreChip` component (title + assignee; `done` muted/struck variant — visual ready, toggle wired in US3) in `client/src/components/calendar/ChoreChip.tsx`
-- [ ] T056 [US1] Implement `MonthNav` (prev/next/Today) inside header in `client/src/components/header/MonthNav.tsx`
-- [ ] T057 [US1] Implement read-only `RosterList` in `client/src/components/sidebar/RosterList.tsx` (interactivity added in US5/US6)
-- [ ] T058 [US1] Wire `App.tsx` to load people + chores for the visible month and render `MonthGrid`
-- [ ] T059 [P] [US1] Client unit test: `MonthGrid` renders 42 cells for any month start in `client/tests/unit/MonthGrid.test.tsx`
-- [ ] T060 [P] [US1] Client unit test: `DayCell` shows today indicator, lists chores, renders "+N more" at >25 in `client/tests/unit/DayCell.test.tsx`
-- [ ] T061 [P] [US1] Client unit test: `ChoreChip` honors `done` styling in `client/tests/unit/ChoreChip.test.tsx`
+- [X] T051 [US1] Implement `loadAll()` action backed by `GET /api/people` in `client/src/store/people.ts`
+- [X] T052 [US1] Implement `loadMonth(monthDate)` action backed by `GET /api/chores?from&to` (with current-filter `assigneeId` if set) in `client/src/store/chores.ts`
+- [X] T053 [P] [US1] Implement `MonthGrid` component (Tailwind grid, 6×7 cells, weekday header) in `client/src/components/calendar/MonthGrid.tsx`
+- [X] T054 [P] [US1] Implement `DayCell` component (date number, today indicator, chore list, "+N more" overflow at >25) in `client/src/components/calendar/DayCell.tsx`
+- [X] T055 [P] [US1] Implement `ChoreChip` component (title + assignee; `done` muted/struck variant — visual ready, toggle wired in US3) in `client/src/components/calendar/ChoreChip.tsx`
+- [X] T056 [US1] Implement `MonthNav` (prev/next/Today) inside header in `client/src/components/header/MonthNav.tsx`
+- [X] T057 [US1] Implement read-only `RosterList` in `client/src/components/sidebar/RosterList.tsx` (interactivity added in US5/US6)
+- [X] T058 [US1] Wire `App.tsx` to load people + chores for the visible month and render `MonthGrid`
+- [X] T059 [P] [US1] Client unit test: `MonthGrid` renders 42 cells for any month start in `client/tests/unit/MonthGrid.test.tsx`
+- [X] T060 [P] [US1] Client unit test: `DayCell` shows today indicator, lists chores, renders "+N more" at >25 in `client/tests/unit/DayCell.test.tsx`
+- [X] T061 [P] [US1] Client unit test: `ChoreChip` honors `done` styling in `client/tests/unit/ChoreChip.test.tsx`
 - [ ] T062 [P] [US1] Client a11y assertion (axe-core) for the home view in `client/tests/unit/a11y.home.test.tsx`
 
 **Checkpoint**: US1 functional. App opens, shows the current month with chores, navigates
@@ -154,18 +154,18 @@ immediately and persists across reloads.
 
 ### Server
 
-- [ ] T063 [US2] Add `create({title, assigneeId, date})` (returns inserted row, emits `chore.created` on the bus, FK violation → typed `AssigneeNotFoundError`) to `server/src/repos/chores.ts`
-- [ ] T064 [US2] Server route: `POST /api/chores` (parses `ChoreCreateSchema`; 400 on validation error; 422 on assignee FK miss) in `server/src/routes/chores.ts`
-- [ ] T065 [P] [US2] Server unit test: chores repo `create()` inserts the row and emits `chore.created` in `server/tests/unit/chores.repo.create.test.ts`
-- [ ] T066 [P] [US2] Server integration test: `POST /api/chores` 201 happy path; 400 on bad title (empty / >120 chars / contains newline); 422 on missing assignee in `server/tests/integration/chores.create.test.ts`
+- [X] T063 [US2] Add `create({title, assigneeId, date})` (returns inserted row, emits `chore.created` on the bus, FK violation → typed `AssigneeNotFoundError`) to `server/src/repos/chores.ts`
+- [X] T064 [US2] Server route: `POST /api/chores` (parses `ChoreCreateSchema`; 400 on validation error; 422 on assignee FK miss) in `server/src/routes/chores.ts`
+- [X] T065 [P] [US2] Server unit test: chores repo `create()` inserts the row and emits `chore.created` in `server/tests/unit/chores.repo.create.test.ts`
+- [X] T066 [P] [US2] Server integration test: `POST /api/chores` 201 happy path; 400 on bad title (empty / >120 chars / contains newline); 422 on missing assignee in `server/tests/integration/chores.create.test.ts`
 
 ### Client
 
-- [ ] T067 [US2] Add optimistic `createChore(input)` action with rollback on error to `client/src/store/chores.ts`
-- [ ] T068 [US2] Implement `ChoreForm` create mode (shadcn `Dialog` + `Calendar` + `Input` + `Select`; date pre-fillable from `DayCell` click; required-field errors; disabled-save-while-pending) in `client/src/components/chore-form/ChoreForm.tsx`
-- [ ] T069 [US2] Update `DayCell` click handler to open `ChoreForm` with that date pre-filled in `client/src/components/calendar/DayCell.tsx`
-- [ ] T070 [P] [US2] Client unit test: `ChoreForm` rejects empty title and missing assignee with explicit error messages in `client/tests/unit/ChoreForm.create.test.tsx`
-- [ ] T071 [P] [US2] Client component-integration test: clicking a `DayCell`, filling the form, saving causes the chore to appear on the calendar (mocked fetch) in `client/tests/unit/createChore.flow.test.tsx`
+- [X] T067 [US2] Add optimistic `createChore(input)` action with rollback on error to `client/src/store/chores.ts`
+- [X] T068 [US2] Implement `ChoreForm` create mode (shadcn `Dialog` + `Calendar` + `Input` + `Select`; date pre-fillable from `DayCell` click; required-field errors; disabled-save-while-pending) in `client/src/components/chore-form/ChoreForm.tsx`
+- [X] T069 [US2] Update `DayCell` click handler to open `ChoreForm` with that date pre-filled in `client/src/components/calendar/DayCell.tsx`
+- [X] T070 [P] [US2] Client unit test: `ChoreForm` rejects empty title and missing assignee with explicit error messages in `client/tests/unit/ChoreForm.create.test.tsx`
+- [X] T071 [P] [US2] Client component-integration test: clicking a `DayCell`, filling the form, saving causes the chore to appear on the calendar (mocked fetch) in `client/tests/unit/createChore.flow.test.tsx`
 
 **Checkpoint**: Combined US1 + US2 form a usable MVP — anyone can view and add chores.
 
