@@ -17,6 +17,7 @@ import { RosterList } from "@/components/sidebar/RosterList";
 import { ChoreForm, type ChoreFormInitial } from "@/components/chore-form/ChoreForm";
 import { usePeopleStore } from "@/store/people";
 import { useChoresStore } from "@/store/chores";
+import { useFilterStore } from "@/store/filter";
 import { useTheme } from "@/hooks/useTheme";
 import { formatYmd } from "@/lib/dates";
 
@@ -30,6 +31,9 @@ export function App() {
   );
   const peopleById = usePeopleStore((s) => s.byId);
   const loadAllPeople = usePeopleStore((s) => s.loadAll);
+  const createPerson = usePeopleStore((s) => s.createPerson);
+  const renamePerson = usePeopleStore((s) => s.renamePerson);
+  const deletePerson = usePeopleStore((s) => s.deletePerson);
 
   const choresMap = useChoresStore((s) => s.byId);
   const loadMonth = useChoresStore((s) => s.loadMonth);
@@ -37,6 +41,9 @@ export function App() {
   const updateChore = useChoresStore((s) => s.updateChore);
   const deleteChore = useChoresStore((s) => s.deleteChore);
   const toggleDone = useChoresStore((s) => s.toggleDone);
+
+  const selectedPersonId = useFilterStore((s) => s.selectedPersonId);
+  const setSelectedPerson = useFilterStore((s) => s.setSelectedPerson);
 
   const sensors = useSensors(
     useSensor(PointerSensor, { activationConstraint: { distance: 4 } }),
@@ -48,8 +55,8 @@ export function App() {
   }, [loadAllPeople]);
 
   useEffect(() => {
-    void loadMonth(month);
-  }, [month, loadMonth]);
+    void loadMonth(month, selectedPersonId);
+  }, [month, selectedPersonId, loadMonth]);
 
   const chores = useMemo(() => Object.values(choresMap), [choresMap]);
 
@@ -78,11 +85,23 @@ export function App() {
         <Header />
         <div className="flex flex-1 overflow-hidden">
           <Sidebar>
-            <RosterList people={people} />
+            <RosterList
+              people={people}
+              selectedPersonId={selectedPersonId}
+              onSelect={setSelectedPerson}
+              onCreate={createPerson}
+              onRename={renamePerson}
+              onDelete={deletePerson}
+            />
           </Sidebar>
           <main className="flex flex-1 flex-col overflow-hidden">
             <div className="flex items-center justify-between border-b px-4 py-2">
               <MonthNav month={month} onChange={setMonth} />
+              {selectedPersonId && peopleById[selectedPersonId] && (
+                <span className="text-xs text-[var(--color-fg-muted)]">
+                  Filtered to {peopleById[selectedPersonId]!.name}
+                </span>
+              )}
             </div>
             <div className="flex-1 overflow-auto p-4">
               <MonthGrid

@@ -12,7 +12,7 @@ interface ChoresState {
   setAll: (chores: Chore[]) => void;
   applyUpsert: (chore: Chore) => void;
   applyDelete: (id: string) => void;
-  loadMonth: (month: Date, assigneeId?: string) => Promise<void>;
+  loadMonth: (month: Date, assigneeId?: string | null) => Promise<void>;
   createChore: (input: ChoreCreate) => Promise<Chore>;
   updateChore: (id: string, patch: ChoreUpdate) => Promise<Chore>;
   deleteChore: (id: string) => Promise<void>;
@@ -20,9 +20,7 @@ interface ChoresState {
 }
 
 function readableError(e: unknown): string {
-  if (e instanceof ApiClientError) {
-    return e.message;
-  }
+  if (e instanceof ApiClientError) return e.message;
   return e instanceof Error ? e.message : "Request failed";
 }
 
@@ -47,7 +45,11 @@ export const useChoresStore = create<ChoresState>((set, get) => ({
     try {
       const from = formatYmd(startOfMonth(month));
       const to = formatYmd(endOfMonth(month));
-      const chores = await api.get<Chore[]>("/api/chores", { from, to, assigneeId });
+      const chores = await api.get<Chore[]>("/api/chores", {
+        from,
+        to,
+        assigneeId: assigneeId ?? undefined,
+      });
       get().setAll(chores);
     } catch (e) {
       set({ loading: false, error: readableError(e) });
@@ -62,7 +64,6 @@ export const useChoresStore = create<ChoresState>((set, get) => ({
   updateChore: async (id, patch) => {
     const previous = get().byId[id];
     if (previous) {
-      // Optimistic patch — only fields actually changing.
       get().applyUpsert({
         ...previous,
         ...(patch.title !== undefined && { title: patch.title }),

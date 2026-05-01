@@ -237,22 +237,22 @@ person with chores — blocked with a clear message.
 
 ### Server
 
-- [ ] T095 [P] [US5] Add `create({name})` with case-insensitive uniqueness (uses `person_name_ci`; surfaces `NameTakenError` on conflict) to `server/src/repos/people.ts`
-- [ ] T096 [P] [US5] Add `rename(id, name)` (404 `PersonNotFoundError`; 409 `NameTakenError`; emits `person.updated`) to `server/src/repos/people.ts`
-- [ ] T097 [P] [US5] Add `delete(id)` (counts referencing chores; throws `PersonHasChoresError` with `choreCount` if any; otherwise emits `person.deleted`) to `server/src/repos/people.ts`
-- [ ] T098 [US5] Server routes: `POST /api/people`, `PATCH /api/people/:id`, `DELETE /api/people/:id` (maps typed errors to 400/404/409 with the contract envelope) in `server/src/routes/people.ts`
-- [ ] T099 [P] [US5] Server unit test: people repo `create` / `rename` / `delete` (incl. uniqueness and chore-blocked delete) in `server/tests/unit/people.repo.mutate.test.ts`
-- [ ] T100 [P] [US5] Server integration test: `POST /api/people` 201 / 400 / 409 in `server/tests/integration/people.create.test.ts`
-- [ ] T101 [P] [US5] Server integration test: `PATCH /api/people/:id` 200 / 404 / 409 in `server/tests/integration/people.patch.test.ts`
-- [ ] T102 [P] [US5] Server integration test: `DELETE /api/people/:id` 204 success / 404 / 409 with `details: { choreCount }` in `server/tests/integration/people.delete.test.ts`
+- [X] T095 [P] [US5] Add `create({name})` with case-insensitive uniqueness (uses `person_name_ci`; surfaces `NameTakenError` on conflict) to `server/src/repos/people.ts`
+- [X] T096 [P] [US5] Add `rename(id, name)` (404 `PersonNotFoundError`; 409 `NameTakenError`; emits `person.updated`) to `server/src/repos/people.ts`
+- [X] T097 [P] [US5] Add `delete(id)` (counts referencing chores; throws `PersonHasChoresError` with `choreCount` if any; otherwise emits `person.deleted`) to `server/src/repos/people.ts`
+- [X] T098 [US5] Server routes: `POST /api/people`, `PATCH /api/people/:id`, `DELETE /api/people/:id` (maps typed errors to 400/404/409 with the contract envelope) in `server/src/routes/people.ts`
+- [X] T099 [P] [US5] Server unit test: people repo `create` / `rename` / `delete` (incl. uniqueness and chore-blocked delete) in `server/tests/unit/people.repo.mutate.test.ts`
+- [X] T100 [P] [US5] Server integration test: `POST /api/people` 201 / 400 / 409 in `server/tests/integration/people.create.test.ts`
+- [X] T101 [P] [US5] Server integration test: `PATCH /api/people/:id` 200 / 404 / 409 in `server/tests/integration/people.patch.test.ts`
+- [X] T102 [P] [US5] Server integration test: `DELETE /api/people/:id` 204 success / 404 / 409 with `details: { choreCount }` in `server/tests/integration/people.delete.test.ts`
 
 ### Client
 
-- [ ] T103 [US5] Add `createPerson`, `renamePerson`, `deletePerson` actions to `client/src/store/people.ts` (optimistic where safe; surfaces 409 toast)
-- [ ] T104 [US5] Extend `RosterList` with inline-add input, click-to-rename inline edit, hover delete-with-confirm in `client/src/components/sidebar/RosterList.tsx`
-- [ ] T105 [P] [US5] Client unit test: add-person flow (success + 409 surfaces toast) in `client/tests/unit/RosterList.add.test.tsx`
-- [ ] T106 [P] [US5] Client unit test: rename-person flow (success + 409 conflict) in `client/tests/unit/RosterList.rename.test.tsx`
-- [ ] T107 [P] [US5] Client unit test: delete-person blocked when chores exist (409 with `choreCount` shown in toast) in `client/tests/unit/RosterList.delete.test.tsx`
+- [X] T103 [US5] Add `createPerson`, `renamePerson`, `deletePerson` actions to `client/src/store/people.ts` (optimistic where safe; surfaces 409 toast)
+- [X] T104 [US5] Extend `RosterList` with inline-add input, click-to-rename inline edit, hover delete-with-confirm in `client/src/components/sidebar/RosterList.tsx`
+- [X] T105 [P] [US5] Client unit test: add-person flow (success + 409 surfaces toast) in `client/tests/unit/RosterList.add.test.tsx`
+- [X] T106 [P] [US5] Client unit test: rename-person flow (success + 409 conflict) in `client/tests/unit/RosterList.rename.test.tsx`
+- [X] T107 [P] [US5] Client unit test: delete-person blocked when chores exist (409 with `choreCount` shown in toast) in `client/tests/unit/RosterList.delete.test.tsx`
 
 **Checkpoint**: Roster fully manageable; chore form's assignee picker stays in sync.
 
@@ -267,12 +267,12 @@ server endpoints — `GET /api/chores` already accepts `assigneeId`.
 **Independent Test**: With chores assigned to multiple people, click *Alex* — only
 Alex's chores remain; click *All* — every chore returns; reload — filter persists.
 
-- [ ] T108 [US6] Add persisted `selectedPersonId` (Zustand + localStorage) and selectors to `client/src/store/filter.ts`
-- [ ] T109 [US6] Make `chores.loadMonth` consume `selectedPersonId` (refetches on change) in `client/src/store/chores.ts`
-- [ ] T110 [US6] Add an "All" entry above the roster, click handlers, and active-state styling in `client/src/components/sidebar/RosterList.tsx`
-- [ ] T111 [P] [US6] Client unit test: clicking a person sets the filter and triggers a refetch; clicking the same person clears it in `client/tests/unit/filter.select.test.tsx`
-- [ ] T112 [P] [US6] Client unit test: clicking "All" clears the filter in `client/tests/unit/filter.all.test.tsx`
-- [ ] T113 [P] [US6] Client unit test: filter persists across a reload (rehydrates from localStorage) in `client/tests/unit/filter.persist.test.tsx`
+- [X] T108 [US6] Add persisted `selectedPersonId` (Zustand + localStorage) and selectors to `client/src/store/filter.ts`
+- [X] T109 [US6] Make `chores.loadMonth` consume `selectedPersonId` (refetches on change) in `client/src/store/chores.ts`
+- [X] T110 [US6] Add an "All" entry above the roster, click handlers, and active-state styling in `client/src/components/sidebar/RosterList.tsx`
+- [X] T111 [P] [US6] Client unit test: clicking a person sets the filter and triggers a refetch; clicking the same person clears it in `client/tests/unit/filter.select.test.tsx`
+- [X] T112 [P] [US6] Client unit test: clicking "All" clears the filter in `client/tests/unit/filter.all.test.tsx`
+- [X] T113 [P] [US6] Client unit test: filter persists across a reload (rehydrates from localStorage) in `client/tests/unit/filter.persist.test.tsx`
 
 **Checkpoint**: All Phase-1 user stories complete and independently demoable.
 
@@ -287,7 +287,7 @@ Alex's chores remain; click *All* — every chore returns; reload — filter per
 - [ ] T116 [P] Server perf assertion: `GET /api/chores?from&to` p95 < 300 ms across N=1000 calls on in-memory SQLite in `server/tests/integration/perf.test.ts`
 - [ ] T117 [P] Server perf assertion: mutating endpoints p95 < 500 ms in `server/tests/integration/perf.mutate.test.ts`
 - [ ] T118 [P] Document the bundle-size budget (≤250 KB gzipped main chunk) and how to inspect Vite's report in `client/README.md`
-- [ ] T119 [P] Add repo `README.md` pointing at `specs/001-office-chores-calendar/quickstart.md` and listing top-level scripts
+- [X] T119 [P] Add repo `README.md` pointing at `specs/001-office-chores-calendar/quickstart.md` and listing top-level scripts
 - [ ] T120 Run quickstart validation manually: `npm install` → start client and server → execute the demo path in a real browser; capture any deltas back into `quickstart.md`
 
 ---

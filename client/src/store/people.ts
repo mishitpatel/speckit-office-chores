@@ -1,6 +1,7 @@
 import { create } from "zustand";
+import { toast } from "sonner";
 import type { Person } from "@office-chores/shared";
-import { api } from "@/lib/api";
+import { api, ApiClientError } from "@/lib/api";
 
 interface PeopleState {
   byId: Record<string, Person>;
@@ -11,6 +12,14 @@ interface PeopleState {
   applyUpsert: (person: Person) => void;
   applyDelete: (id: string) => void;
   loadAll: () => Promise<void>;
+  createPerson: (name: string) => Promise<Person>;
+  renamePerson: (id: string, name: string) => Promise<Person>;
+  deletePerson: (id: string) => Promise<void>;
+}
+
+function readableError(e: unknown): string {
+  if (e instanceof ApiClientError) return e.message;
+  return e instanceof Error ? e.message : "Request failed";
 }
 
 export const usePeopleStore = create<PeopleState>((set, get) => ({
@@ -41,7 +50,40 @@ export const usePeopleStore = create<PeopleState>((set, get) => ({
       const people = await api.get<Person[]>("/api/people");
       get().setAll(people);
     } catch (e) {
-      set({ loading: false, error: (e as Error).message });
+      set({ loading: false, error: readableError(e) });
+      toast.error("Failed to load people", { description: readableError(e) });
+    }
+  },
+  createPerson: async (name) => {
+    try {
+      const created = await api.post<Person>("/api/people", { name });
+      get().applyUpsert(created);
+      return created;
+    } catch (e) {
+      toast.error("Add failed", { description: readableError(e) });
+      throw e;
+    }
+  },
+  renamePerson: async (id, name) => {
+    const previous = get().byId[id];
+    if (previous) get().applyUpsert({ ...previous, name });
+    try {
+      const updated = await api.patch<Person>(`/api/people/${id}`, { name });
+      get().applyUpsert(updated);
+      return updated;
+    } catch (e) {
+      if (previous) get().applyUpsert(previous);
+      toast.error("Rename failed", { description: readableError(e) });
+      throw e;
+    }
+  },
+  deletePerson: async (id) => {
+    try {
+      await api.del(`/api/people/${id}`);
+      get().applyDelete(id);
+    } catch (e) {
+      toast.error("Delete failed", { description: readableError(e) });
+      throw e;
     }
   },
 }));
